@@ -1,24 +1,60 @@
 import { useState } from 'react'
-import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
-import Divider from '@mui/material/Divider'
-import Drawer from '@mui/material/Drawer'
-import IconButton from '@mui/material/IconButton'
-import List from '@mui/material/List'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemText from '@mui/material/ListItemText'
 import MenuIcon from '@mui/icons-material/Menu'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
+import CloseIcon from '@mui/icons-material/Close'
+import {
+   AppBar,
+   Box,
+   Divider,
+   Drawer,
+   IconButton,
+   List,
+   ListItem,
+   ListItemButton,
+   ListItemText,
+   Toolbar,
+   Typography,
+   Button,
+   Stack,
+} from '@mui/material'
+import { Link } from 'react-router-dom'
 
-const navItems = ['Home', 'About', 'Contact']
+const navItems = [
+   <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+      Home
+   </Link>,
+   <Link to='/shop' style={{ textDecoration: 'none', color: 'white' }}>
+      Shop
+   </Link>,
+   <Link to='/about' style={{ textDecoration: 'none', color: 'white' }}>
+      About
+   </Link>,
+   <Link to='/contact' style={{ textDecoration: 'none', color: 'white' }}>
+      Contact
+   </Link>,
+]
+const navDrawerItems = [
+   <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
+      Home
+   </Link>,
+   <Link to='/shop' style={{ textDecoration: 'none', color: 'black' }}>
+      Shop
+   </Link>,
+   <Link to='/about' style={{ textDecoration: 'none', color: 'black' }}>
+      About
+   </Link>,
+   <Link to='/contact' style={{ textDecoration: 'none', color: 'black' }}>
+      Contact
+   </Link>,
+]
 
 const Header = (props) => {
    const { window } = props
    const [mobileOpen, setMobileOpen] = useState(false)
-   const [title] = useState('Carleto')
+   const [title] = useState(
+      <Link to='/' style={{ textDecoration: 'none', color: 'white   ' }}>
+         Carleto
+      </Link>
+   )
 
    const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen)
@@ -26,15 +62,28 @@ const Header = (props) => {
 
    // This is the menu for the mobile view
    const drawer = (
-      <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-         <Typography variant='h6' sx={{ my: 2 }}>
-            {title}
-         </Typography>
+      <Box onClick={handleDrawerToggle}>
+         <Stack
+            direction='row'
+            justifyContent='space-between'
+            alignItems='center'
+            sx={{ py: 1, px: 2, backgroundColor: 'secondary' }}
+         >
+            <Typography variant='h6'>{title}</Typography>
+            <IconButton
+               color='inherit'
+               aria-label='close drawer'
+               onClick={handleDrawerToggle}
+               sx={{ display: { sm: 'none' } }}
+            >
+               <CloseIcon />
+            </IconButton>
+         </Stack>
          <Divider />
          <List>
             {/* Here where the links will go */}
-            {navItems.map((item) => (
-               <ListItem key={item} disablePadding>
+            {navDrawerItems.map((item, index) => (
+               <ListItem key={index}>
                   <ListItemButton sx={{ textAlign: 'center' }}>
                      <ListItemText primary={item} />
                   </ListItemButton>
@@ -48,8 +97,8 @@ const Header = (props) => {
       window !== undefined ? () => window().document.body : undefined
 
    return (
-      <Box sx={{ display: 'flex' , p: 4}}>
-         <AppBar component='nav'>
+      <Box sx={{ display: 'flex', p: 4 }}>
+         <AppBar component='nav' color='primary'>
             <Toolbar>
                <Typography
                   variant='h6'
@@ -99,8 +148,6 @@ const Header = (props) => {
                {drawer}
             </Drawer>
          </Box>
-
-         
       </Box>
    )
 }
