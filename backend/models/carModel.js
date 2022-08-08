@@ -1,5 +1,14 @@
 const mongoose = require('mongoose')
 
+const ImageSchema = new mongoose.Schema({
+   url: {
+      type: String,
+   },
+   filename: {
+      type: String,
+   },
+})
+
 const carSchema = mongoose.Schema(
    {
       user: {
@@ -147,6 +156,7 @@ const carSchema = mongoose.Schema(
          enum: ['automatic', 'manual'],
          default: 'automatic',
       },
+      images: [ImageSchema],
    },
    {
       timestamps: true,

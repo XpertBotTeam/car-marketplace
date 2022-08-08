@@ -1,5 +1,9 @@
 const express = require('express')
 const router = express.Router()
+const multer = require('multer')
+const {storage} = require('../config/cloudinary')
+const upload = multer({storage})
+
 const {
    getCars,
    getCar,
@@ -10,7 +14,7 @@ const {
 
 const { protect } = require('../middleware/authMiddleware')
 
-router.route('/').get(protect, getCars).post(protect, createCar)
+router.route('/').get(protect, getCars).post(protect, upload.array('image'), createCar)
 
 router
    .route('/:id')

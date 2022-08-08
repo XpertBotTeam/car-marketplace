@@ -138,7 +138,7 @@ const createCar = asyncHandler(async (req, res) => {
       throw new Error('User not found')
    }
 
-   const car = await Car.create({
+   const car = new Car({
       description,
       user: req.user.id,
       carName,
@@ -152,6 +152,10 @@ const createCar = asyncHandler(async (req, res) => {
       color,
       transmitionType,
    })
+
+   car.images = req.files.map((f) => ({ url: f.path, filename: f.filename }))
+
+   await car.save()
 
    res.status(201).json(car)
 })
