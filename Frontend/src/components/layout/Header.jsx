@@ -1,9 +1,10 @@
-import { useState } from 'react'
-import MenuIcon from '@mui/icons-material/Menu'
-import CloseIcon from '@mui/icons-material/Close'
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import CloseIcon from '@mui/icons-material/Close';
+import MenuIcon from '@mui/icons-material/Menu';
 import {
    AppBar,
    Box,
+   Button,
    Divider,
    Drawer,
    IconButton,
@@ -11,12 +12,16 @@ import {
    ListItem,
    ListItemButton,
    ListItemText,
-   Toolbar,
-   Typography,
-   Button,
+   Menu,
+   MenuItem,
    Stack,
-} from '@mui/material'
-import { Link } from 'react-router-dom'
+   Toolbar,
+   Typography
+} from '@mui/material';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { logout, reset } from '../../features/auth/authSlice';
 
 const navItems = [
    <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
@@ -48,6 +53,10 @@ const navDrawerItems = [
 ]
 
 const Header = (props) => {
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
+   const { user } = useSelector((state) => state.auth)
+
    const { window } = props
    const [mobileOpen, setMobileOpen] = useState(false)
    const [title] = useState(
@@ -55,6 +64,23 @@ const Header = (props) => {
          Carleto
       </Link>
    )
+
+   const [anchorEl, setAnchorEl] = useState(null)
+
+   const handleMenu = (event) => {
+      setAnchorEl(event.currentTarget)
+   }
+
+   const handleClose = () => {
+      setAnchorEl(null)
+   }
+
+   const onLogout = () => {
+      dispatch(logout())
+      dispatch(reset())
+      handleClose()
+      navigate('/')
+   }
 
    const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen)
@@ -119,11 +145,66 @@ const Header = (props) => {
 
                {/* desktop view page button */}
                <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                  {navItems.map((item) => (
-                     <Button key={item} sx={{ color: '#fff' }}>
+                  {navItems.map((item, index) => (
+                     <Button key={index} sx={{ color: '#fff' }}>
                         {item}
                      </Button>
                   ))}
+                  {user ? (
+                     // <Button
+                     //    variant='contained'
+                     //    color='secondary'
+                     //    size='small'
+                     //    sx={{ color: '#fff', marginLeft: '5px' }}
+                     //    onClick={onLogout}
+                     // >
+                     //    Logout
+                     // </Button>
+                     <>
+                        <IconButton
+                           size='large'
+                           aria-label='account of current user'
+                           aria-controls='menu-appbar'
+                           aria-haspopup='true'
+                           onClick={handleMenu}
+                           color='inherit'
+                        >
+                           <AccountCircle />
+                        </IconButton>
+                        <Menu
+                           id='menu-appbar'
+                           anchorEl={anchorEl}
+                           anchorOrigin={{
+                              vertical: 'top',
+                              horizontal: 'right',
+                           }}
+                           keepMounted
+                           transformOrigin={{
+                              vertical: 'top',
+                              horizontal: 'right',
+                           }}
+                           open={Boolean(anchorEl)}
+                           onClose={handleClose}
+                        >
+                           <MenuItem onClick={handleClose}>Profile</MenuItem>
+                           <MenuItem onClick={onLogout}>Logout</MenuItem>
+                        </Menu>
+                     </>
+                  ) : (
+                     <Button
+                        variant='contained'
+                        color='secondary'
+                        size='small'
+                        sx={{ color: '#fff', marginLeft: '5px' }}
+                     >
+                        <Link
+                           to='/login'
+                           style={{ textDecoration: 'none', color: 'white' }}
+                        >
+                           Login
+                        </Link>
+                     </Button>
+                  )}
                </Box>
             </Toolbar>
          </AppBar>
