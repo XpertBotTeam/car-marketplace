@@ -1,6 +1,6 @@
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import CloseIcon from '@mui/icons-material/Close';
-import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircle from '@mui/icons-material/AccountCircle'
+import CloseIcon from '@mui/icons-material/Close'
+import MenuIcon from '@mui/icons-material/Menu'
 import {
    AppBar,
    Box,
@@ -8,6 +8,7 @@ import {
    Divider,
    Drawer,
    IconButton,
+   Link,
    List,
    ListItem,
    ListItemButton,
@@ -17,37 +18,77 @@ import {
    Stack,
    Toolbar,
    Typography
-} from '@mui/material';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { logout, reset } from '../../features/auth/authSlice';
+} from '@mui/material'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import { logout, reset } from '../../features/auth/authSlice'
 
 const navItems = [
-   <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+   <Link
+      component={RouterLink}
+      to='/'
+      variant='body2'
+      sx={{ color: 'white', textDecoration: 'none' }}
+   >
       Home
    </Link>,
-   <Link to='/shop' style={{ textDecoration: 'none', color: 'white' }}>
+   <Link
+      component={RouterLink}
+      to='/shop'
+      variant='body2'
+      sx={{ color: 'white', textDecoration: 'none' }}
+   >
       Shop
    </Link>,
-   <Link to='/about' style={{ textDecoration: 'none', color: 'white' }}>
+   <Link
+      component={RouterLink}
+      to='/about'
+      variant='body2'
+      sx={{ color: 'white', textDecoration: 'none' }}
+   >
       About
    </Link>,
-   <Link to='/contact' style={{ textDecoration: 'none', color: 'white' }}>
+   <Link
+      component={RouterLink}
+      to='/contact'
+      variant='body2'
+      sx={{ color: 'white', textDecoration: 'none' }}
+   >
       Contact
    </Link>,
 ]
 const navDrawerItems = [
-   <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
+   <Link
+      component={RouterLink}
+      to='/'
+      variant='body2'
+      sx={{ color: 'black', textDecoration: 'none' }}
+   >
       Home
    </Link>,
-   <Link to='/shop' style={{ textDecoration: 'none', color: 'black' }}>
+   <Link
+      component={RouterLink}
+      to='/shop'
+      variant='body2'
+      sx={{ color: 'black', textDecoration: 'none' }}
+   >
       Shop
    </Link>,
-   <Link to='/about' style={{ textDecoration: 'none', color: 'black' }}>
+   <Link
+      component={RouterLink}
+      to='/about'
+      variant='body2'
+      sx={{ color: 'black', textDecoration: 'none' }}
+   >
       About
    </Link>,
-   <Link to='/contact' style={{ textDecoration: 'none', color: 'black' }}>
+   <Link
+      component={RouterLink}
+      to='/contact'
+      variant='body2'
+      sx={{ color: 'black', textDecoration: 'none' }}
+   >
       Contact
    </Link>,
 ]
@@ -151,15 +192,6 @@ const Header = (props) => {
                      </Button>
                   ))}
                   {user ? (
-                     // <Button
-                     //    variant='contained'
-                     //    color='secondary'
-                     //    size='small'
-                     //    sx={{ color: '#fff', marginLeft: '5px' }}
-                     //    onClick={onLogout}
-                     // >
-                     //    Logout
-                     // </Button>
                      <>
                         <IconButton
                            size='large'
@@ -186,7 +218,15 @@ const Header = (props) => {
                            open={Boolean(anchorEl)}
                            onClose={handleClose}
                         >
-                           <MenuItem onClick={handleClose}>Profile</MenuItem>
+                           <MenuItem onClick={handleClose}>
+                              <Link
+                                 component={RouterLink}
+                                 to='/profile'
+                                 sx={{ textDecoration: 'none' }}
+                              >
+                                 Profile
+                              </Link>
+                           </MenuItem>
                            <MenuItem onClick={onLogout}>Logout</MenuItem>
                         </Menu>
                      </>
@@ -198,8 +238,10 @@ const Header = (props) => {
                         sx={{ color: '#fff', marginLeft: '5px' }}
                      >
                         <Link
+                           component={RouterLink}
                            to='/login'
-                           style={{ textDecoration: 'none', color: 'white' }}
+                           variant='body2'
+                           sx={{ color: 'white', textDecoration: 'none' }}
                         >
                            Login
                         </Link>
