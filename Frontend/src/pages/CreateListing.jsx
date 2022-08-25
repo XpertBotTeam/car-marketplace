@@ -1,26 +1,27 @@
 import {
-    Box,
-    Button,
-    Container,
-    CssBaseline,
-    FormControl,
-    Grid,
-    InputLabel,
-    LinearProgress,
-    Link,
-    MenuItem,
-    Select,
-    TextField,
-    Typography
+   Box,
+   Button,
+   Container,
+   CssBaseline,
+   FormControl,
+   Grid,
+   ImageList,
+   InputLabel,
+   LinearProgress,
+   Link,
+   MenuItem,
+   Select,
+   TextField,
+   Typography
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import {
-    carBodyTypes,
-    carBrands,
-    carColors
+   carBodyTypes,
+   carBrands,
+   carColors
 } from '../features/cars/carSelectInfo'
 import { createCar, reset } from '../features/cars/carSlice'
 
@@ -40,7 +41,7 @@ const CreateListing = () => {
 
       if (isSuccess) {
          dispatch(reset())
-         navigate('/tickets')
+         navigate('/shop')
       }
 
       dispatch(reset())
@@ -60,6 +61,7 @@ const CreateListing = () => {
       mileage: '',
       color: '',
       transmitionType: '',
+      image: {},
    })
 
    const {
@@ -76,6 +78,7 @@ const CreateListing = () => {
       mileage,
       color,
       transmitionType,
+      image,
    } = formData
 
    //    on change function that change inout value by id
@@ -84,7 +87,7 @@ const CreateListing = () => {
       if (e.target.files) {
          setFormData((prevState) => ({
             ...prevState,
-            images: e.target.files,
+            image: e.target.files,
          }))
       }
       setFormData({ ...formData, [e.target.id]: e.target.value })
@@ -105,11 +108,29 @@ const CreateListing = () => {
          year === '' ||
          mileage === '' ||
          color === '' ||
-         transmitionType === ''
+         transmitionType === '' ||
+         image == {}
       ) {
          toast.error('Please fill all fields')
       } else {
-         dispatch(createCar(formData))
+         dispatch(
+            createCar({
+               carName,
+               price,
+               description,
+               condition,
+               location,
+               longitude,
+               latitude,
+               bodyType,
+               brand,
+               year,
+               mileage,
+               color,
+               transmitionType,
+               image,
+            })
+         )
       }
    }
    return (
@@ -374,6 +395,35 @@ const CreateListing = () => {
                            rows={3}
                            onChange={onChange}
                         />
+                     </Grid>
+                     <Grid item xs={12}>
+                        <Button
+                           variant='contained'
+                           component='label'
+                           fullWidth
+                           sx={{ textAlign: 'center' }}
+                        >
+                           Upload the Car Images
+                           <br />
+                           {image.length > 0
+                              ? image.length + ' file(s) are selected'
+                              : 'No files are selected'}
+                           <input
+                              type='file'
+                              id='image'
+                              max='6'
+                              accept='.jpg,.png,.jpeg'
+                              multiple
+                              hidden
+                              onChange={(e) => {
+                                 setFormData((prevState) => ({
+                                    ...prevState,
+                                    image: e.target.files,
+                                 }))
+                              }}
+                              required
+                           />
+                        </Button>
                      </Grid>
                   </Grid>
                   <Button

@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = '/api/cars/'
+const API_URL = 'http://127.0.0.1:5000/api/cars/'
 
 // Create a car
 const createCar = async (carData, token) => {
