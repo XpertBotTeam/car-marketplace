@@ -38,6 +38,14 @@ const carSchema = mongoose.Schema(
          type: String,
          required: true,
       },
+      latitude: {
+         type: Number,
+         required: [true, 'Please add a latitude'],
+      },
+      longitude: {
+         type: Number,
+         required: [true, 'Please add a longitude'],
+      },
       bodyType: {
          type: String,
          required: true,

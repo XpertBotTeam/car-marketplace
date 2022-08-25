@@ -56,7 +56,7 @@ export default function Register() {
    return (
       <>
          {isLoading && <LinearProgress />}
-         <Container component='main' maxWidth='xs'>
+         <Container component='div' maxWidth='xs'>
             <CssBaseline />
             <Box
                sx={{

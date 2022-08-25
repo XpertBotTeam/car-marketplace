@@ -6,6 +6,7 @@ const upload = multer({storage})
 
 const {
    getCars,
+   getAllCars,
    getCar,
    createCar,
    deleteCar,
@@ -15,6 +16,8 @@ const {
 const { protect } = require('../middleware/authMiddleware')
 
 router.route('/').get(protect, getCars).post(protect, upload.array('image'), createCar)
+
+router.route('/all').get(getAllCars)
 
 router
    .route('/:id')

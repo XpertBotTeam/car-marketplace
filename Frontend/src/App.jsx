@@ -7,6 +7,7 @@ import Header from './components/layout/Header'
 import PrivateRoute from './components/PrivateRoute'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import CreateListing from './pages/CreateListing'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
@@ -29,6 +30,9 @@ function App() {
                   <Route path='/login' element={<Login />} />
                   <Route path='/profile' element={<PrivateRoute />}>
                      <Route path='/profile' element={<Profile />} />
+                  </Route>
+                  <Route path='/newcar' element={<PrivateRoute />}>
+                     <Route path='/newcar' element={<CreateListing />} />
                   </Route>
                </Routes>
                <Footer />

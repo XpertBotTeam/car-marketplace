@@ -1,4 +1,4 @@
-import { Paper, Typography, Box, Container } from '@mui/material'
+import { Box, Container, Paper, Typography } from '@mui/material'
 
 const Footer = () => {
    return (
@@ -9,7 +9,7 @@ const Footer = () => {
          sx={{
             marginTop: 'calc(10% + 60px)',
             bottom: 0,
-            backgroundColor: 'secondary.main',
+            backgroundColor: 'primary.main',
          }}
          >
          <Container maxWidth='lg'>
@@ -21,7 +21,7 @@ const Footer = () => {
                   my: 2,
                }}
             >
-               <Typography variant='caption' color='initial'>
+               <Typography variant='caption' color='white'>
                   Copyright ©{new Date().getFullYear()}
                </Typography>
             </Box>

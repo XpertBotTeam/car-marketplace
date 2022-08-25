@@ -20,6 +20,16 @@ const getCars = asyncHandler(async (req, res) => {
    res.status(200).json(cars)
 })
 
+// @desc    Get all car
+// @route   GET /api/car/all
+// @access  Private
+const getAllCars = asyncHandler(async (req, res) => {
+   // const cars = await Car.find()
+   const cars = await Car.find({})
+
+   res.status(200).json(cars)
+})
+
 // @desc    Get user car
 // @route   GET /api/cars/:id
 // @access  Private
@@ -117,6 +127,8 @@ const createCar = asyncHandler(async (req, res) => {
       description,
       condition,
       location,
+      longitude,
+      latitude,
       bodyType,
       brand,
       year,
@@ -145,6 +157,8 @@ const createCar = asyncHandler(async (req, res) => {
       price,
       condition,
       location,
+      longitude,
+      latitude,
       bodyType,
       brand,
       year,
@@ -163,6 +177,7 @@ const createCar = asyncHandler(async (req, res) => {
 module.exports = {
    getCars,
    getCar,
+   getAllCars,
    createCar,
    deleteCar,
    updateCar,
